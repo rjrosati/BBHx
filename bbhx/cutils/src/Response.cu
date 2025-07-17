@@ -262,7 +262,8 @@ d_transferL_holder d_TDICombinationFD(d_Gslr_holder Gslr, double f, int TDItag, 
     else if (TDItag == 3)
     {
         if (tdi2)
-            error("unsupported for sagnac channels");
+            return transferL;
+            //error("unsupported for sagnac channels");
 
         Alpharaw = Gslr.G12 + z*Gslr.G23 + z*z * Gslr.G31 +
             -Gslr.G13 - z*Gslr.G32 - z*z*Gslr.G21;
@@ -276,7 +277,7 @@ d_transferL_holder d_TDICombinationFD(d_Gslr_holder Gslr, double f, int TDItag, 
         return transferL;
     }
     else {
-        error("Unknown tditag");
+        //error("Unknown tditag");
         return transferL;
     }
 }
