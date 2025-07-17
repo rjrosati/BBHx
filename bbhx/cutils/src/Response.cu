@@ -264,15 +264,15 @@ d_transferL_holder d_TDICombinationFD(d_Gslr_holder Gslr, double f, int TDItag, 
         if (tdi2)
             error("unsupported for sagnac channels");
 
-        Alpharaw = Gslr.G12 + z*Gslr.G23 + z*z * Gsrl.G31 +
+        Alpharaw = Gslr.G12 + z*Gslr.G23 + z*z * Gslr.G31 +
             -Gslr.G13 - z*Gslr.G32 - z*z*Gslr.G21;
-        Betaraw = Gslr.G23 + z*Gslr.G31 + z*z * Gsrl.G12 +
+        Betaraw = Gslr.G23 + z*Gslr.G31 + z*z * Gslr.G12 +
             -Gslr.G21 - z*Gslr.G13 - z*z*Gslr.G32;
-        Gammaraw = Gslr.G31 + z*Gslr.G12 + z*z * Gsrl.G23 +
+        Gammaraw = Gslr.G31 + z*Gslr.G12 + z*z * Gslr.G23 +
             -Gslr.G32 - z*Gslr.G21 - z*z*Gslr.G13;
-        transferL.transferL1 = factor_convention * Alpharaw;
-        transferL.transferL2 = factor_convention * Betaraw;
-        transferL.transferL3 = factor_convention * Gammaraw;
+        transferL.transferL1 = Alpharaw;
+        transferL.transferL2 = Betaraw;
+        transferL.transferL3 = Gammaraw;
         return transferL;
     }
     else {
