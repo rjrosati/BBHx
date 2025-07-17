@@ -205,6 +205,7 @@ d_transferL_holder d_TDICombinationFD(d_Gslr_holder Gslr, double f, int TDItag, 
     double x = PI * f * orbits->armlength / C_SI;
     cmplx z = gcmplx::exp(I * 2. * x);
     cmplx Xraw, Yraw, Zraw, Araw, Eraw, Traw;
+    cmplx Alpharaw, Betaraw, Gammaraw;
     cmplx factor_convention, point5, c_one, c_two;
     if (TDItag == 1)
     {
@@ -223,7 +224,7 @@ d_transferL_holder d_TDICombinationFD(d_Gslr_holder Gslr, double f, int TDItag, 
         return transferL;
     }
 
-    else
+    else if (TDItag == 2)
     {
         // # First-generation TDI AET from X,Y,Z
         // # With x=pifL, factors scaled out: A,E:I*SQRT2*sin2x*e2ix T:2*SQRT2*sin2x*sinx*e3ix
@@ -256,6 +257,26 @@ d_transferL_holder d_TDICombinationFD(d_Gslr_holder Gslr, double f, int TDItag, 
         transferL.transferL1 = tdi2_factor * factor_convention * factorAE * Araw;
         transferL.transferL2 = tdi2_factor * factor_convention * factorAE * Eraw;
         transferL.transferL3 = tdi2_factor * factor_convention * factorT * Traw;
+        return transferL;
+    }
+    else if (TDItag == 3)
+    {
+        if (tdi2)
+            error("unsupported for sagnac channels");
+
+        Alpharaw = Gslr.G12 + z*Gslr.G23 + z*z * Gsrl.G31 +
+            -Gslr.G13 - z*Gslr.G32 - z*z*Gslr.G21;
+        Betaraw = Gslr.G23 + z*Gslr.G31 + z*z * Gsrl.G12 +
+            -Gslr.G21 - z*Gslr.G13 - z*z*Gslr.G32;
+        Gammaraw = Gslr.G31 + z*Gslr.G12 + z*z * Gsrl.G23 +
+            -Gslr.G32 - z*Gslr.G21 - z*z*Gslr.G13;
+        transferL.transferL1 = factor_convention * Alpharaw;
+        transferL.transferL2 = factor_convention * Betaraw;
+        transferL.transferL3 = factor_convention * Gammaraw;
+        return transferL;
+    }
+    else {
+        error("Unknown tditag");
         return transferL;
     }
 }
