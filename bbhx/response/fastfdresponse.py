@@ -43,8 +43,8 @@ class LISATDIResponse:
     This class has GPU capability.
 
     Args:
-        TDItag (str, optional): TDI channels to generate. Options are ``"XYZ"`` and
-            ``"AET"``. If ``"XYZ"`` is not given, it will default to ``"AET"``.
+        TDItag (str, optional): TDI channels to generate. Options are ``"XYZ"``, ``"ABG"`` and
+            ``"AET"``. If not given, it will default to ``"AET"``.
             (Default: ``"AET"``)
         orbits (Orbits, optional): Orbit class. If ``None``, orbits is set to
             :class:`EqualArmlengthOrbits`. (Default: ``None``)
@@ -96,9 +96,12 @@ class LISATDIResponse:
         self.TDItag = TDItag
         if TDItag == "XYZ":
             self.TDItag_int = 1
-
-        else:
+        else if TDItag == "AET":
             self.TDItag_int = 2
+        else if TDItag == "ABG":
+            self.TDItag_int = 3
+        else:
+            raise NotImplementedError(f"Unknown TDItag: {TDItag}")
 
         # PhenomHM modes
         self.allowable_modes = [(2, 2), (3, 3), (4, 4), (2, 1), (3, 2), (4, 3)]
