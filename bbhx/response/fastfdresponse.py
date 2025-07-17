@@ -96,9 +96,9 @@ class LISATDIResponse:
         self.TDItag = TDItag
         if TDItag == "XYZ":
             self.TDItag_int = 1
-        else if TDItag == "AET":
+        elif TDItag == "AET":
             self.TDItag_int = 2
-        else if TDItag == "ABG":
+        elif TDItag == "ABG":
             self.TDItag_int = 3
         else:
             raise NotImplementedError(f"Unknown TDItag: {TDItag}")
